@@ -1,8 +1,8 @@
 <?php
 class DBINFO{
-    const USER = 'plutoless';        
-    const PASS = 'cashcash1987';
-    const HOST = '';
+    const USER = 'root';        
+    const PASS = '';
+    const HOST = 'localhost';
     const DB_NAME = 'workflowmanager';
 }
 ?>
