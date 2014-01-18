@@ -2,8 +2,13 @@
 include 'db.php';
 
     class DBOP{
-        function login($user, $pwd, $did){
-            DB::connect();
+        protected $db = NULL;
+        public function __construct() {
+            $this->db = new DB();
+        }
+        
+        public function login($user, $pwd, $did){
+            $this->db->connect();
             $query = sprintf("SELECT * FROM user WHERE username='%s' AND passwd='%s' AND did='%s'",
                                 $user, $pwd, $did);
             $result = mysql_query($query) or die(mysql_error());
