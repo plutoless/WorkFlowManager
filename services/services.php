@@ -1,4 +1,6 @@
 <?php
+error_reporting(E_ALL);
+ ini_set("display_errors", 1);
 include '../db/db_operations.php';
 include 'action_mapping.php';
 
@@ -16,6 +18,23 @@ if($action){
                 $data = $db->login($user, $pass, $deviceid);
             } else {
                 echo 'insufficient info';
+            }
+            break;
+        case ACTMAP::ACTION_SUBMIT_MSG:
+            $uploaddir = '../uploads/';
+            if(!is_writable($uploaddir) || !is_dir($uploaddir)){ echo "error in dir"; }
+            
+            $file = basename($_FILES['attachment']['name']);
+            $uploadfile = $uploaddir . $file;
+
+            echo "file=".$file."\n"; //is empty, but shouldn't
+            echo $_FILES['attachment']['tmp_name']."\n";
+            echo $_FILES['attachment']['error']."\n";
+            if (move_uploaded_file($_FILES['attachment']['tmp_name'], $uploadfile)) {
+                echo $file;
+            }
+            else {
+                echo "error";
             }
             break;
         default:
