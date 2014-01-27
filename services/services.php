@@ -1,5 +1,5 @@
 <?php
-session_start();
+// session_start();
 
 include '../db/db_operations.php';
 include 'action_mapping.php';
@@ -10,13 +10,15 @@ $data_encode = NULL;
 $action = filter_input(INPUT_GET, "action", FILTER_VALIDATE_INT);
 $db = new DBOP();
 $uid = NULL;
-if(isset($_SESSION['uid'])){
-    $uid = $_SESSION['uid'];
-}
+// if(isset($_SESSION['uid'])){
+    // $uid = $_SESSION['uid'];
+// }
 if($action){
-    if($action != ACTMAP::ACTION_LOGIN && !$uid){
-        echo "login required";
-    } else {
+    // if($action != ACTMAP::ACTION_LOGIN && !$uid){
+        // echo "login required";
+    // } else {
+        $uid = filter_input(INPUT_POST, "uid");
+    
         switch($action){
             case ACTMAP::ACTION_LOGIN:
                 $user = filter_input(INPUT_GET, "user");
@@ -25,7 +27,7 @@ if($action){
                 if($user && $pass && $deviceid){
                     $data = $db->login($user, $pass, $deviceid);
                     if($data['valid']){
-                        $_SESSION['uid'] = $data['data']['uid'];
+                        // $_SESSION['uid'] = $data['data']['uid'];
                     }
                 } else {
                     echo 'insufficient info';
@@ -94,7 +96,7 @@ if($action){
                 echo 'non-recognizable action code';
                 break;
         }
-    }
+    // }
     if($data){
         $data_encode = json_encode($data);
     }
