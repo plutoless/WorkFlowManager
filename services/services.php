@@ -62,10 +62,10 @@ if($action){
                 $pos = filter_input(INPUT_POST, "pos");
                 if($text && $pos){
                     $title = filter_input(INPUT_POST, "title");
-                    $var1 = filter_input(INPUT_POST, "var1");
-                    $var2 = filter_input(INPUT_POST, "var2");
-                    $var3 = filter_input(INPUT_POST, "var3");
-                    if($title && $var1 && $var2 && $var3){
+                    $var1 = filter_input(INPUT_POST, "var1")?filter_input(INPUT_POST, "var1"):"";
+                    $var2 = filter_input(INPUT_POST, "var2")?filter_input(INPUT_POST, "var2"):"";
+                    $var3 = filter_input(INPUT_POST, "var3")?filter_input(INPUT_POST, "var3"):"";
+                    if($title){
                         require_once '../PHPWord.php';
                         $uploaddir = '../'.SYSINFO::UPLOAD_DIR;
                         $templateFile = '../'.SYSINFO::TEMPLATE_FILE_PATH;
