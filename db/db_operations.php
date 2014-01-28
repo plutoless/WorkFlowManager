@@ -41,6 +41,17 @@ include 'db.php';
             $query = sprintf("INSERT INTO message (uid, text, pos, attachment) VALUES (%s, '%s', '%s', '%s')",
                                 mysql_real_escape_string($uid), mysql_real_escape_string($text), mysql_real_escape_string($pos), mysql_real_escape_string($attachment));
             mysql_query($query) or die(mysql_errno());
-            return true;
+            return mysql_insert_id();
+        }
+        
+        public function getAllMessages(){
+            $query = sprintf("SELECT * FROM message LEFT JOIN user ON message.uid=user.uid");
+            $result = mysql_query($query) or die(mysql_errno());
+            $msgArray = array();
+            while($row = mysql_fetch_assoc($result)){
+                array_push($msgArray, $row);
+            }
+            
+            return $msgArray;
         }
     }
