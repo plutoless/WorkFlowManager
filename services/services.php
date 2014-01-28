@@ -1,6 +1,5 @@
 <?php
 // session_start();
-
 include '../db/db_operations.php';
 include 'action_mapping.php';
 include 'system_info.php';
@@ -59,13 +58,13 @@ if($action){
                 }
                 break;
             case ACTMAP::ACTION_SUBMIT_MSG_WITH_DOC:
-                $text = filter_input(INPUT_POST, "text");
-                $pos = filter_input(INPUT_POST, "pos");
+                $text = filter_input(INPUT_GET, "text");
+                $pos = filter_input(INPUT_GET, "pos");
                 if($text && $pos){
-                    $title = filter_input(INPUT_POST, "title");
-                    $var1 = filter_input(INPUT_POST, "var1");
-                    $var2 = filter_input(INPUT_POST, "var2");
-                    $var3 = filter_input(INPUT_POST, "var3");
+                    $title = filter_input(INPUT_GET, "title");
+                    $var1 = filter_input(INPUT_GET, "var1");
+                    $var2 = filter_input(INPUT_GET, "var2");
+                    $var3 = filter_input(INPUT_GET, "var3");
                     if($title && $var1 && $var2 && $var3){
                         require_once '../PHPWord.php';
                         $uploaddir = '../'.SYSINFO::UPLOAD_DIR;
@@ -77,7 +76,7 @@ if($action){
                         $document->setValue('Value1', $var1);
                         $document->setValue('Value2', $var2);
                         $document->setValue('Value3', $var3);
-                        $filename = $uploaddir.$title.'.docx';
+                        $filename = iconv('UTF-8','GBK',$uploaddir.$title.'.docx');;
                         $document->save($filename);
                         if(file_exists($filename)){
                             if($db->submitMessage($uid, $text, $pos, $filename)){
